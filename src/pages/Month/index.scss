@@ -1,0 +1,16 @@
+.monthlyBill{
+  background-color: green;
+  height: 100vw;
+  width: 100vw;
+  .content{
+    display: flex;
+    div{
+      flex-grow: 1;
+      height: 100%;
+    }
+    div:nth-child(2){
+      flex-grow: 2;
+      background-color: orange;
+    }
+  }
+}
