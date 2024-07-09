@@ -69,6 +69,13 @@
       "date": "2024-07-07T08:45:15",
       "useFor": "investment",
       "id": 10
+    },
+    {
+      "type": "pay",
+      "money": -751,
+      "date": "2024-07-07T13:38:23",
+      "useFor": "shopping",
+      "id": 11
     }
   ]
 }

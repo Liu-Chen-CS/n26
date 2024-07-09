@@ -1,0 +1,23 @@
+.daybill{
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 80px;
+  .upper-daybill{
+    flex-grow: 1;
+    background-color: aqua;
+    display: flex;
+    justify-content: space-between;
+  }
+  .under-daybill{
+    flex-grow: 1;
+    background-color: yellow;
+    display: flex;
+  }
+  .under-daybill div{
+    flex-grow: 1;
+  }
+  .under-daybill div:nth-child(2){
+    flex-grow: 2;
+  }
+}
