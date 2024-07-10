@@ -8,11 +8,20 @@
     background-color: aqua;
     display: flex;
     justify-content: space-between;
+    .arrow{
+      .icon{
+        transition: 0.3s all 0s linear;
+      }
+    }
+    .arrow:hover{
+      cursor: pointer;
+    }
   }
   .under-daybill{
     flex-grow: 1;
     background-color: yellow;
     display: flex;
+
   }
   .under-daybill div{
     flex-grow: 1;

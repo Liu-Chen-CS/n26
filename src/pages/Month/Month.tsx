@@ -1,24 +1,50 @@
 import "./index.scss";
 import Stats from "../../components/Stats/Stats";
 import {useState} from "react";
+import {useFormik} from "formik";
+import {object, string} from 'yup';
+
+type FormType = {
+    username?: string,
+    password?: string,
+}
+
+type ErrorType = {
+    username?: string | null,
+    password?: string | null,
+}
+
+const initialValues: FormType = {
+    username: "Liu Chen",
+    password: "",
+}
 
 const Month = () => {
-    const [psw, setPsw] = useState<string>("");
-    const [pswValue, setPswValue] = useState<string>("");
-    const handlePsw = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const inputVal:string = e.target.value;
-        if(inputVal.length < 3 && inputVal.length > 0){
-            setPswValue("password is too short")
-        }
-        else if(inputVal.length > 15){
-            setPswValue("password is too long");
-        }
-        else{
-            setPswValue("perfect!");
-        }
-        setPsw(inputVal);
-    }
-
+    const formik = useFormik({
+        initialValues,
+        onSubmit: values => {
+            console.log(values)},
+        validationSchema: object({
+            username: string().max(15, "Yup - 用户长度不能大于15").required("Yup - 请输入用户名"),
+            password: string().min(6, "Yup - 密码的长度不能小于6").required("Yup - 请输入密码"),
+        }),
+        // validate: (values: FormType):ErrorType => {
+        //     const errors: ErrorType = {};
+        //     if (!values.username) {
+        //         errors.username = "请输入用户名";
+        //     } else if (values.username.length > 15) {
+        //         errors.username = "用户名长度不能大于15";
+        //     }
+        //     if (!values.password) {
+        //         errors.password = "请输入密码";
+        //     } else if (values.password.length < 6) {
+        //         errors.password = "密码的长度不能小于6";
+        //     } else if (values.password.length > 15) {
+        //         errors.password = "密码的长度不能大于15";
+        //     }
+        //     return errors;
+        // },
+    });
     return (
         <div className="monthlyBill">
             {/*Stats components*/}
@@ -35,8 +61,18 @@ const Month = () => {
                             </label><br/>
                             <label>
                                 password:
-                                <input type="password" name="psw" value={psw} onChange={handlePsw}/>
-                                <span>{pswValue}</span>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={formik.values.password}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                />
+                                <span>
+                                    {
+                                        formik.touched.password && formik.errors.password ? formik.errors.password : null
+                                    }
+                                </span>
                             </label><br/>
                         </fieldset>
                         <fieldset>
@@ -71,7 +107,43 @@ const Month = () => {
                         <input type="submit" value="submit"/>
                     </form>
                 </div>
-                <div className="right">3</div>
+                <div className="right">
+                    <form onSubmit={formik.handleSubmit}>
+                        <label>
+                            User Name:
+                            <input
+                                type="text"
+                                name="username"
+                                value={formik.values.username}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                            />
+                        </label>
+                        <p>
+                            {
+                                formik.touched.username && formik.errors.username ? formik.errors.username : null
+                            }
+                        </p>
+                        <br/>
+                        <label>
+                            Password:
+                            <input
+                                type="password"
+                                name="password"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                            />
+                        </label>
+                        <p>
+                            {
+                                formik.touched.password && formik.errors.password ? formik.errors.password : null
+                            }
+                        </p>
+                        <input type="submit"/>
+                    </form>
+                    <div>{formik.values.username}</div>
+                </div>
             </div>
         </div>
     );
